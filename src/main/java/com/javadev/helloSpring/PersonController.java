@@ -2,13 +2,16 @@ package com.javadev.helloSpring;
 
 import com.javadev.helloSpring.model.Person;
 import com.javadev.helloSpring.service.PersonService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 public class PersonController {
-    PersonService personService = new PersonService();
+
+    @Autowired
+    PersonService personService;
 
     @RequestMapping(value = "/persons", method = RequestMethod.GET, headers = "Accept=application/json")
     public List getPersons() {
@@ -29,12 +32,10 @@ public class PersonController {
     @RequestMapping(value = "/persons", method = RequestMethod.PUT, headers = "Accept=application/json")
     public Person updatePerson(@RequestBody Person person) {
         return personService.updatePerson(person);
-
     }
 
     @RequestMapping(value = "/person/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
     public void deletePerson(@PathVariable("id") int id) {
         personService.deletePerson(id);
-
     }
 }

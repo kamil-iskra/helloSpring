@@ -1,6 +1,10 @@
 package com.javadev.helloSpring.model;
 
+import org.springframework.context.annotation.Bean;
+
 public class Person {
+    private static int nextId = 0;
+
     private int id;
     private String firstName, lastName;
 
@@ -8,11 +12,13 @@ public class Person {
         super();
     }
 
-    public Person(int id, String firstName, String lastName) {
+    public Person(String firstName, String lastName) {
         super();
-        this.id = id;
+        this.id = Person.nextId;
         this.firstName = firstName;
         this.lastName = lastName;
+
+        Person.nextId++;
     }
 
     public int getId() {
@@ -20,8 +26,8 @@ public class Person {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId() {
+        this.id = Person.nextId++;
     }
 
     public String getFirstName() {

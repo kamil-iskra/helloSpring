@@ -1,78 +1,62 @@
 package com.javadev.helloSpring.service;
 
 import com.javadev.helloSpring.model.Person;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@Service
 public class PersonService {
-    static HashMap<Integer,Person> personIdMap=getPersonIdMap();
-
+    static HashMap<Integer, Person> personIdMap = getPersonIdMap();
 
     public PersonService() {
-        super();
 
-        if(personIdMap==null)
-        {
-            personIdMap=new HashMap<Integer,Person>();
-            // Creating some objects of Country while initializing
-            Person indiaCountry=new Person(1, "India","Lolo");
-            Person chinaCountry=new Person(4, "China","Kolo");
-            Person nepalCountry=new Person(3, "Nepal","Polo");
-            Person bhutanCountry=new Person(2, "Bhutan","Zolo");
+        if (personIdMap == null) {
+            personIdMap = new HashMap<Integer, Person>();
+            Person adam = new Person("Adam", "Kowalski");
+            Person tomasz = new Person("Tomasz", "Ziolo");
+            Person grzegorz = new Person("Grzegorz", "Zwierzynski");
+            Person dawid = new Person("Dawid", "Biganski");
 
-
-            personIdMap.put(1,indiaCountry);
-            personIdMap.put(4,chinaCountry);
-            personIdMap.put(3,nepalCountry);
-            personIdMap.put(2,bhutanCountry);
+            personIdMap.put(adam.getId(), adam);
+            personIdMap.put(tomasz.getId(), tomasz);
+            personIdMap.put(grzegorz.getId(), grzegorz);
+            personIdMap.put(dawid.getId(), dawid);
         }
     }
 
-    public List getAllPersons()
-    {
+    public List getAllPersons() {
         List persons = new ArrayList(personIdMap.values());
         return persons;
     }
 
-    public Person getPerson(int id)
-    {
-        Person person= personIdMap.get(id);
+    public Person getPerson(int id) {
+        Person person = personIdMap.get(id);
         return person;
     }
-    public Person addPerson(Person person)
-    {
-        person.setId(getMaxId()+1);
+
+    public Person addPerson(Person person) {
+        person.setId();
         personIdMap.put(person.getId(), person);
         return person;
     }
 
-    public Person updatePerson(Person person)
-    {
-        if(person.getId()<=0)
+    public Person updatePerson(Person person) {
+        if(!personIdMap.containsKey(person.getId()))
             return null;
+
         personIdMap.put(person.getId(), person);
         return person;
 
     }
-    public void deletePerson(int id)
-    {
+
+    public void deletePerson(int id) {
         personIdMap.remove(id);
     }
 
     public static HashMap<Integer, Person> getPersonIdMap() {
         return personIdMap;
-    }
-
-    // Utility method to get max id
-    public static int getMaxId()
-    { int max=0;
-        for (int id:personIdMap.keySet()) {
-            if(max<=id)
-                max=id;
-
-        }
-        return max;
     }
 }
